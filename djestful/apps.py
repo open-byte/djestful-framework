@@ -3,4 +3,11 @@ from django.apps import AppConfig
 
 class DjestFulConfig(AppConfig):
     name = 'djestful'
-    label = 'DjestFul Framework'
+    label = 'djestful'
+    verbose_name = 'Djestful Framework'
+
+    def ready(self) -> None:
+        from djestful import main
+
+        main()
+        return super().ready()

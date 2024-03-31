@@ -1,0 +1,9 @@
+.venv*
+poetry.lock
+**/*.pyc
+**/*/__pycache__
+.*dmypy.json
+.vscode
+database_data
+.mypy_cache
+.ruff_cache

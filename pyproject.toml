@@ -1,0 +1,61 @@
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+name = "djestful-framework"
+version = "0.0.0"
+description = "Djestful Framework is a Python framework for building RESTful APIs with Standard OpenAPI 3.x+"
+authors = ["Izcar J. Muñoz Torrez <imunoz@open-byte.dev>"]
+
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+pydantic = "^2.6"
+django = ">= 4.2, < 6"
+
+[tool.poetry.group.checkers.dependencies]
+mypy = ">=1.9,<2"
+ruff = "^0.3.4"
+pre-commit = "^3.7.0"
+
+
+[tool.poetry.group.test.dependencies]
+pytest = "^8.1.1"
+
+[tool.mypy]
+strict=true
+explicit_package_bases=true
+
+mypy_path = "$MYPY_CONFIG_FILE_DIR/djestful"
+plugins = ["pydantic.mypy"]
+[tool.pydantic-mypy]
+init_forbid_extra = true
+init_typed = true
+
+[tool.ruff]
+src =["src"]
+line-length = 100
+fixable = ["F401", "ALL"]
+unfixable = []
+[tool.ruff.lint]
+select = [
+    "E",  # pycodestyle errors
+    "W",  # pycodestyle warnings
+    "F",  # pyflakes
+    "I",  # isort
+    "B",  # flake8-bugbear
+    "C4",  # flake8-comprehensions
+    "UP",  # pyupgrade
+]
+ignore = [
+    "B008",  # do not perform function calls in argument defaults
+]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.format]
+quote-style = "single"
+indent-style = "space"

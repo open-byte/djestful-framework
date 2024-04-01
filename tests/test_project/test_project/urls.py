@@ -23,3 +23,4 @@ urlpatterns = [
     path('test/', include('test_app.urls')),
     path('docs/', include('djestful.urls')),
 ]
+

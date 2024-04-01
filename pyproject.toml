@@ -43,7 +43,7 @@ init_typed = true
 src =["src"]
 exclude = [
     ".venv", 
-    "test"
+    "tests"
 ]
 line-length = 100
 fixable = ["F401", "ALL"]

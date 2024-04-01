@@ -1,3 +1,5 @@
+### FastAPI's original code
+
 import json
 from typing import Annotated, Any, Dict, Optional
 
@@ -31,7 +33,7 @@ def get_swagger_ui_html(
             """
             The OpenAPI URL that Swagger UI should load and use.
 
-            This is normally done automatically by FastAPI using the default URL
+            This is normally done automatically by DjestFul using the default URL
             `/openapi.json`.
             """
         ),
@@ -76,7 +78,7 @@ def get_swagger_ui_html(
         Optional[str],
         Doc(
             """
-            The OAuth2 redirect URL, it is normally automatically handled by FastAPI.
+            The OAuth2 redirect URL, it is normally automatically handled by DjestFul.
             """
         ),
     ] = None,
@@ -165,7 +167,7 @@ def get_redoc_html(
             """
             The OpenAPI URL that ReDoc should load and use.
 
-            This is normally done automatically by FastAPI using the default URL
+            This is normally done automatically by DjestFul using the default URL
             `/openapi.json`.
             """
         ),

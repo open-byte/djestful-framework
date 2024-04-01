@@ -176,7 +176,7 @@ class Example(TypedDict, total=False):
     value: Optional[Any]
     externalValue: Optional[AnyUrl]
 
-    model_config = {'extra': 'allow'}
+    model_config = {'extra': 'allow'}  # type: ignore
 
 
 class ParameterInType(Enum):

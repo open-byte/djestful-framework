@@ -11,7 +11,7 @@ class TestView(APIView):
         print(self._test.__annotations__)
         return get_swagger_ui_html(
             title='Test API',
-            openapi_url='http://localhost:8000/openapi.json',
+            openapi_url='http://localhost:8000/docs/openapi.json',
         )
 
     def post(self, request, *args, **kwargs) -> HttpResponse:

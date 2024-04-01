@@ -7,7 +7,4 @@ class DjestFulConfig(AppConfig):
     verbose_name = 'Djestful Framework'
 
     def ready(self) -> None:
-        from djestful import main
-
-        main()
         return super().ready()

@@ -18,11 +18,17 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 
-from test_app.views import TestView
+from test_app.views import TestView, test_view
+
+
+
+
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('test/', include('test_app.urls')),
     path('test-api-2/', TestView.as_view(), name='test_view-2'),
+    path('test-api-3/', test_view, name='test_view-3'),
 ]
 

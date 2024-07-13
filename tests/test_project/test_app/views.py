@@ -1,18 +1,14 @@
 from django.http import HttpResponse, JsonResponse
-from djestful.openapi.docs import get_swagger_ui_html
 from djestful.views import APIView
-
-
+from django.http import HttpRequest
 class TestView(APIView):
-    def _test(i: int):
-        return i + 1
 
-    def get(self, request: int, *args, **kwargs) -> HttpResponse:
-        print(self._test.__annotations__)
-        return get_swagger_ui_html(
-            title='Test API',
-            openapi_url='http://localhost:8000/docs/openapi.json',
-        )
+    def get(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
+        from djestful.urls import get_urls
 
-    def post(self, request, *args, **kwargs) -> HttpResponse:
-        return HttpResponse('Hello, World!')
+        print(get_urls())
+        return JsonResponse({'message': 'Hello, World! (GET)'})
+
+    def post(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
+      
+        return JsonResponse({'message': 'Hello, World! (POST)'})

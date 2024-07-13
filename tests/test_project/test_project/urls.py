@@ -18,9 +18,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 
+from test_app.views import TestView
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('test/', include('test_app.urls')),
-    path('docs/', include('djestful.urls')),
+    path('test-api-2/', TestView.as_view(), name='test_view-2'),
 ]
 

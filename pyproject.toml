@@ -20,9 +20,9 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.group.checkers.dependencies]
 mypy = ">=1.9,<2"
-ruff = "^0.3.4"
+ruff = "^0.5.1"
 pre-commit = "^3.7.0"
-django-stubs = "^4.2.7"
+django-stubs = "^5.0.2"
 
 
 [tool.poetry.group.test.dependencies]
@@ -31,7 +31,6 @@ pytest = "^8.1.1"
 [tool.mypy]
 exclude = "test"
 strict=true
-explicit_package_bases=true
 
 mypy_path = "$MYPY_CONFIG_FILE_DIR/djestful"
 plugins = ["pydantic.mypy"]
@@ -40,7 +39,7 @@ init_forbid_extra = true
 init_typed = true
 
 [tool.ruff]
-src =["src"]
+src =["djestful"]
 exclude = [
     ".venv", 
     "tests"

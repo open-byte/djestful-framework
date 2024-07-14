@@ -8,7 +8,7 @@ from django.views import View
 from djestful.views import APIView
 
 
-def _describe_pattern(pattern: URLPattern) -> str:
+def _describe_pattern(pattern: URLPattern | URLResolver) -> str:
     return str(pattern.pattern)
 
 
@@ -51,5 +51,4 @@ def get_urls_view_mapping() -> list[tuple[str, View]]:
             if hasattr(item, 'callback') and item.callback:
                 url_view_mapping.append((_describe_pattern(item), item.callback))
 
-    print(json.dumps(url_view_mapping, indent=4, default=str))
     return url_view_mapping

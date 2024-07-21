@@ -2,6 +2,7 @@ import json
 from typing import Any, Callable
 
 from django.apps import AppConfig
+from django.views import View
 
 from djestful.urls import get_urls_view_mapping
 
@@ -12,7 +13,7 @@ class DjestFulConfig(AppConfig):
     verbose_name = 'Djestful Framework'
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
-        self._url_view_mapping: list[tuple[str, Callable[...]]] = []
+        self._url_view_mapping: list[tuple[str, Callable[..., Any]]] = []
 
         super().__init__(*args, **kwargs)
 

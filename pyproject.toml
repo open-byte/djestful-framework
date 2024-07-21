@@ -29,7 +29,7 @@ django-stubs = "^5.0.2"
 pytest = "^8.1.1"
 
 [tool.mypy]
-exclude = "test"
+exclude=[".venv", "tests"]
 strict=true
 
 mypy_path = "$MYPY_CONFIG_FILE_DIR/djestful"

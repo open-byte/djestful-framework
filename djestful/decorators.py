@@ -1,7 +1,10 @@
 from functools import wraps
 from typing import Any, Callable, Literal
 
-from .constants import HTTP_METHODS
+from djestful.func_attributes import FuncAttributes
+from djestful.types import HttpMethod
+
+from .constants import DJESTFUL_ATTRS
 
 # def action(
 #     path: str,
@@ -35,7 +38,7 @@ class action:
         self,
         path: str,
         *,
-        methods: list[str],
+        methods: list[HttpMethod],
         description: str | None = None,
         summary: str | None = None,
     ) -> None:
@@ -45,8 +48,9 @@ class action:
         self.summary = summary
 
     def __call__(self, func: Callable[..., Any]) -> Callable[..., Any]:
-        setattr(func, '__djestful_flag', {'method': self.methods})
-        print(f'path: {self.path}')
+        djestful_attrs = FuncAttributes(methods=self.methods, url=self.path)
+        setattr(func, DJESTFUL_ATTRS, djestful_attrs)
+        setattr(func, '__test', 'test')
         return func
 
     @classmethod

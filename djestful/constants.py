@@ -8,3 +8,5 @@ HTTP_METHODS = (
     'options',
     'trace',
 )
+
+DJESTFUL_ATTRS = '__djestful__attrs'

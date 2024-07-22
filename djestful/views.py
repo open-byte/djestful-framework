@@ -111,7 +111,6 @@ class APIView(View):
             self = cls(**initkwargs)
 
             for http_method, action in actions.items():
-                print(http_method, action)
                 handler = getattr(self, action)
                 setattr(self, http_method, handler)
 
@@ -122,6 +121,7 @@ class APIView(View):
                     f"{cls.__name__} instance has no 'request' attribute. Did you override "
                     'setup() and forget to call super()?'
                 )
+
             return self.dispatch(request, *args, **kwargs)
 
         view.view_class = cls  # type: ignore[attr-defined]
@@ -145,6 +145,22 @@ class APIView(View):
             markcoroutinefunction(view)
 
         return csrf_exempt(view)
+
+    def dispatch(self, request: HttpRequest, *args: Any, **kwargs: Any) -> Any:
+        # Try to dispatch to the right method; if a method doesn't exist,
+        # defer to the error handler. Also defer to the error handler if the
+        # request method isn't on the approved list.
+        method = request.method.lower()  # type: ignore[union-attr]
+        if method not in self.http_method_names:
+            handler = self.http_method_not_allowed
+
+        else:
+            handler = getattr(self, method)
+
+            if not is_djestful_action(handler):
+                handler = self.http_method_not_allowed
+
+        return handler(request, *args, **kwargs)
 
     # def __check_pattern_path_with_the_same_method(self, request: HttpRequest) -> bool:
     #     """

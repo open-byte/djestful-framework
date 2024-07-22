@@ -21,6 +21,13 @@ class TestView(APIView):
     @action.delete('/users/me', summary='This is a test delete endpoint')
     async def delete_test_endpoint(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
         return JsonResponse({'message': 'This is a test DELETE endpoint', 'function': 'delete_test_endpoint',})
+    
+    @action.get('/users/', summary='This is a test delete endpoint', url_name='test-get')
+    async def get_test_endpoint2(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
+        return JsonResponse({'message': 'This is a test GET endpoint', 'function': 'get_test_endpoint2',})
+    @action.post('/users/', summary='This is a test post endpoint', url_name='test-post')
+    async def post(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
+        return JsonResponse({'message': 'This is a test POST endpoint', 'function': 'post',})
 
 
 class TestView2(APIView):

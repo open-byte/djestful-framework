@@ -1,6 +1,6 @@
 import logging
 from inspect import getmembers
-from typing import Any
+from typing import Any, Callable
 
 from asgiref.sync import iscoroutinefunction, markcoroutinefunction
 from django.core.exceptions import ImproperlyConfigured
@@ -28,22 +28,58 @@ from djestful.utils import is_djestful_action
 class APIView(View):
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
+        self.handlers: list[Callable[..., Any]] = []
 
     @classproperty
-    def view_is_async(cls):
+    def view_is_async(cls) -> bool:  # type: ignore[override]
+        """
+        Check if the view is asynchronous.
+
+        Returns:
+            bool: True if the view is asynchronous, False otherwise.
+
+        Raises:
+            ImproperlyConfigured: If the HTTP handlers are not all synchronous or all asynchronous.
+        """
         handlers = cls.handlers
+
         if not handlers:
             return False
         is_async = iscoroutinefunction(handlers[0])
         if not all(iscoroutinefunction(h) == is_async for h in handlers[1:]):
             raise ImproperlyConfigured(
-                f'{cls.__qualname__} HTTP handlers must either be all sync or all ' 'async.'
+                f'{cls.__qualname__} HTTP handlers must either be all sync or all ' 'async.'  # type: ignore[attr-defined]
             )
         return is_async
 
     @classonlymethod
-    def as_view(cls, actions: DictHttpMethodStr | None = None, **initkwargs: Any) -> Any:
-        """Main entry point for a request-response process."""
+    def as_view(
+        cls, actions: DictHttpMethodStr | None = None, **initkwargs: Any
+    ) -> Callable[..., Any]:
+        """
+        This method is used to create a view function that handles incoming requests and generates
+        appropriate responses. It is typically called by the URL routing mechanism to associate a
+        URL pattern with a view.
+
+        Args:
+            cls (type): The class object that the view function is being created for.
+            actions (dict or None): A dictionary that maps HTTP methods to method names. Each key
+                represents an HTTP method (e.g., 'get', 'post') and the corresponding value is the
+                name of the method in the class that should be called for that HTTP method. If None,
+                an ImproperlyConfigured exception is raised.
+            **initkwargs (dict): Additional keyword arguments that are passed to the class
+                constructor when creating an instance of the class.
+
+        Returns:
+            Callable[..., Any]: The view function that handles the request and generates the
+            response.
+
+        Raises:
+            ImproperlyConfigured: If `actions` is None.
+            TypeError: If `actions` is not a dictionary or if any of the keyword arguments in
+                `initkwargs` are not valid attributes of the class.
+
+        """
 
         if actions is None:  ## change this
             raise ImproperlyConfigured(
@@ -75,6 +111,7 @@ class APIView(View):
             self = cls(**initkwargs)
 
             for http_method, action in actions.items():
+                print(http_method, action)
                 handler = getattr(self, action)
                 setattr(self, http_method, handler)
 
@@ -89,6 +126,7 @@ class APIView(View):
 
         view.view_class = cls  # type: ignore[attr-defined]
         view.view_initkwargs = initkwargs  # type: ignore[attr-defined]
+        view.actions = actions  # type: ignore[attr-defined]
 
         # __name__ and __qualname__ are intentionally left unchanged as
         # view_class should be used to robustly determine the name of the view
@@ -101,9 +139,23 @@ class APIView(View):
         view.__dict__.update(cls.dispatch.__dict__)
 
         cls.handlers = [getattr(cls, name) for name, method in getmembers(cls, is_djestful_action)]
-        print(cls.handlers)
+
         # Mark the callback if the view class is async.
         if cls.view_is_async:
             markcoroutinefunction(view)
 
         return csrf_exempt(view)
+
+    # def __check_pattern_path_with_the_same_method(self, request: HttpRequest) -> bool:
+    #     """
+    #     Check if the request path matches the pattern path and the request method matches the
+    #     pattern method.
+
+    #     Args:
+    #         request (HttpRequest): The incoming request.
+
+    #     Returns:
+    #         bool: True if the request path matches the pattern path and the request method matches
+    #         the pattern method, False otherwise.
+    #     """
+    #     return request.path == reverse(self.__class__.__name__.

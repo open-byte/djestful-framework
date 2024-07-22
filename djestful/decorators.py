@@ -6,32 +6,6 @@ from djestful.types import HttpMethod
 
 from .constants import DJESTFUL_ATTRS
 
-# def action(
-#     path: str,
-#     *,
-#     method: str,
-#     description: str | None = None,
-#     summary: str | None = None,
-# ) -> Callable[..., Any]:
-#     assert method in HTTP_METHODS
-
-#     def decorator(func: Callable[..., Any]) -> Callable[..., Any]:
-#         setattr(func, '__djestful_flag', {'method': method})
-#         return func
-
-#     return decorator
-
-
-# def _get_action_method(
-#     path: str,
-#     description: str | None = None,
-#     summary: str | None = None,
-# ) -> Callable[..., Any]:
-#     return action(path, method='get', description=description, summary=summary)
-
-
-# action.get = _get_action_method
-
 
 class action:
     def __init__(
@@ -41,16 +15,21 @@ class action:
         methods: list[HttpMethod],
         description: str | None = None,
         summary: str | None = None,
+        url_name: str | None = None,
     ) -> None:
         self.path = path
         self.methods = methods
         self.description = description
         self.summary = summary
+        self.url_name = url_name
 
     def __call__(self, func: Callable[..., Any]) -> Callable[..., Any]:
-        djestful_attrs = FuncAttributes(methods=self.methods, url=self.path)
+        djestful_attrs = FuncAttributes(
+            methods=self.methods,
+            path=self.path,
+            url_name=self.url_name,
+        )
         setattr(func, DJESTFUL_ATTRS, djestful_attrs)
-        setattr(func, '__test', 'test')
         return func
 
     @classmethod
@@ -60,6 +39,7 @@ class action:
         *,
         description: str | None = None,
         summary: str | None = None,
+        url_name: str | None = None,
     ) -> Callable[..., Any]:
         """
         Decorator for defining a POST endpoint.
@@ -77,6 +57,7 @@ class action:
             methods=['get'],
             description=description,
             summary=summary,
+            url_name=url_name,
         )
 
     @classmethod
@@ -86,6 +67,7 @@ class action:
         *,
         description: str | None = None,
         summary: str | None = None,
+        url_name: str | None = None,
     ) -> Callable[..., Any]:
         """
         Decorator for defining a POST endpoint.
@@ -103,6 +85,7 @@ class action:
             methods=['post'],
             description=description,
             summary=summary,
+            url_name=url_name,
         )
 
     @classmethod
@@ -112,6 +95,7 @@ class action:
         *,
         description: str | None = None,
         summary: str | None = None,
+        url_name: str | None = None,
     ) -> Callable[..., Any]:
         """
         Decorator for defining a PUT endpoint.
@@ -129,6 +113,7 @@ class action:
             methods=['put'],
             description=description,
             summary=summary,
+            url_name=url_name,
         )
 
     @classmethod
@@ -138,6 +123,7 @@ class action:
         *,
         description: str | None = None,
         summary: str | None = None,
+        url_name: str | None = None,
     ) -> Callable[..., Any]:
         """
         Decorator for defining a PATCH endpoint.
@@ -155,6 +141,7 @@ class action:
             methods=['patch'],
             description=description,
             summary=summary,
+            url_name=url_name,
         )
 
     @classmethod
@@ -164,6 +151,7 @@ class action:
         *,
         description: str | None = None,
         summary: str | None = None,
+        url_name: str | None = None,
     ) -> Callable[..., Any]:
         """
         Decorator for defining a DELETE endpoint.
@@ -181,6 +169,7 @@ class action:
             methods=['delete'],
             description=description,
             summary=summary,
+            url_name=url_name,
         )
 
     @classmethod
@@ -188,9 +177,10 @@ class action:
         cls,
         path: str,
         *,
-        methods: list[str],
+        methods: list[HttpMethod],
         description: str | None = None,
         summary: str | None = None,
+        url_name: str | None = None,
     ) -> Callable[..., Any]:
         """
         Decorator for defining a generic endpoint.
@@ -209,4 +199,5 @@ class action:
             methods=methods,
             description=description,
             summary=summary,
+            url_name=url_name,
         )

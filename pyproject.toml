@@ -29,10 +29,13 @@ django-stubs = "^5.0.2"
 pytest = "^8.1.1"
 
 [tool.mypy]
+python_version = "3.11"
 exclude=[".venv", "tests"]
 strict=true
+follow_imports="normal"
 
-mypy_path = "$MYPY_CONFIG_FILE_DIR/djestful"
+
+
 plugins = ["pydantic.mypy"]
 [tool.pydantic-mypy]
 init_forbid_extra = true

@@ -1,34 +1,36 @@
 # ruff: noqa: F401
 # type: ignore
-from djestful import operation
+from djestful import action
 
 class UserView(APIView, prefix='user'):
     tags = ['User']
  
-    @operation.get(path='user/{id}')
+    @action.get(path='user/{id}')
     def get(self, id: int) -> User:
         return User.objects.get(id=id)
 
-    @operation.post(path='user')
+    @action.post(path='user')
     def post(self, user: User) -> User:
         user.save()
         return user
 
-    @operation.put(path='user/{id}')
+    @action.put(path='user/{id}')
     def put(self, id: int, user: User) -> User:
         user.id = id
         user.save()
         return user
 
-    @operation.delete(path='user/{id}')
+    @action.delete(path='user/{id}')
     def delete(self, id: int) -> None:
         User.objects.get(id=id).delete()
         return None
 
 
 
+router = APIRouter(prefix='user')
 
-@operation.get(path='user')
+
+@router.get(path='user')
 def get_users(self) -> List[User]:
     return User.objects.all()
 

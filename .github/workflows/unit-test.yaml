@@ -5,7 +5,8 @@ on:
     branches:
       - test/test
 jobs:
-  tests:
+  unit-test:
+    name: Unit Test on Python ${{ matrix.python-version }}
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 4
@@ -25,4 +26,5 @@ jobs:
 
     - name: Run Tests
       run: |
+        export DJANGO_SETTINGS_MODULE="tests.app.settings"
         poetry run pytest --verbosity 2

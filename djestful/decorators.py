@@ -6,17 +6,15 @@ from djestful.types import HttpMethod
 
 from .constants import DJESTFUL_ATTRS
 
-__all__ = ('action',)
 
-
-class Action:
+class action:
     def __init__(
         self,
         path: str,
         *,
         methods: list[HttpMethod],
-        description: str | None = None,
         summary: str | None = None,
+        description: str | None = None,
         url_name: str | None = None,
     ) -> None:
         self.path = path
@@ -40,8 +38,8 @@ class Action:
         cls,
         path: str,
         *,
-        description: str | None = None,
         summary: str | None = None,
+        description: str | None = None,
         url_name: str | None = None,
     ) -> Callable[..., Any]:
         """
@@ -68,8 +66,8 @@ class Action:
         cls,
         path: str,
         *,
-        description: str | None = None,
         summary: str | None = None,
+        description: str | None = None,
         url_name: str | None = None,
     ) -> Callable[..., Any]:
         """
@@ -86,8 +84,8 @@ class Action:
         return cls(
             path,
             methods=['post'],
-            description=description,
             summary=summary,
+            description=description,
             url_name=url_name,
         )
 
@@ -96,8 +94,8 @@ class Action:
         cls,
         path: str,
         *,
-        description: str | None = None,
         summary: str | None = None,
+        description: str | None = None,
         url_name: str | None = None,
     ) -> Callable[..., Any]:
         """
@@ -114,8 +112,8 @@ class Action:
         return cls(
             path,
             methods=['put'],
-            description=description,
             summary=summary,
+            description=description,
             url_name=url_name,
         )
 
@@ -124,8 +122,8 @@ class Action:
         cls,
         path: str,
         *,
-        description: str | None = None,
         summary: str | None = None,
+        description: str | None = None,
         url_name: str | None = None,
     ) -> Callable[..., Any]:
         """
@@ -142,8 +140,8 @@ class Action:
         return cls(
             path,
             methods=['patch'],
-            description=description,
             summary=summary,
+            description=description,
             url_name=url_name,
         )
 
@@ -152,8 +150,8 @@ class Action:
         cls,
         path: str,
         *,
-        description: str | None = None,
         summary: str | None = None,
+        description: str | None = None,
         url_name: str | None = None,
     ) -> Callable[..., Any]:
         """
@@ -170,8 +168,8 @@ class Action:
         return cls(
             path,
             methods=['delete'],
-            description=description,
             summary=summary,
+            description=description,
             url_name=url_name,
         )
 
@@ -181,8 +179,8 @@ class Action:
         path: str,
         *,
         methods: list[HttpMethod],
-        description: str | None = None,
         summary: str | None = None,
+        description: str | None = None,
         url_name: str | None = None,
     ) -> Callable[..., Any]:
         """
@@ -200,10 +198,7 @@ class Action:
         return cls(
             path,
             methods=methods,
-            description=description,
             summary=summary,
+            description=description,
             url_name=url_name,
         )
-
-
-action = Action

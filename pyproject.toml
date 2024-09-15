@@ -48,7 +48,6 @@ init_typed = true
 src =["djestful"]
 exclude = [
     ".venv", 
-    "tests"
 ]
 line-length = 100
 fixable = ["F401", "ALL"]

@@ -1,9 +1,9 @@
 name: 'Unit Test'
 
 on:
-  pull_request:
+  push:
     branches:
-      - main
+      - test/test
 jobs:
   tests:
     runs-on: ubuntu-latest

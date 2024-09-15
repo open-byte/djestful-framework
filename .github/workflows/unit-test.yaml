@@ -21,7 +21,7 @@ jobs:
     - name: Install Dependencies
       run: |
         pip install poetry
-        poetry install with=main,test
+        poetry install --with main,test
 
     - name: Run Tests
       run: |

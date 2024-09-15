@@ -1,8 +1,8 @@
 """
-URL configuration for test_project project.
+URL configuration for tests project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/5.0/topics/http/urls/
+    https://docs.djangoproject.com/en/5.1/topics/http/urls/
 Examples:
 Function views
     1. Add an import:  from my_app import views
@@ -16,16 +16,12 @@ Including another URLconf
 """
 
 from django.contrib import admin
-from django.urls import include, path
-
-
-
-
+from django.http import JsonResponse
+from django.urls import path
+from djestful.decorators import action
+from djestful.routers import Router
+from djestful.views import APIView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('test/', include('test_app.urls')),
-    #path('test-api-2/', TestView.as_view(), name='test_view-2'),
-    #path('test-api-3/', test_view, name='test_view-3'),
 ]
-

@@ -1,4 +1,3 @@
-import logging
 from inspect import getmembers
 from typing import Any, Callable
 
@@ -6,21 +5,12 @@ from asgiref.sync import iscoroutinefunction, markcoroutinefunction
 from django.core.exceptions import ImproperlyConfigured
 from django.http import (
     HttpRequest,
-    HttpResponse,
-    HttpResponseGone,
-    HttpResponseNotAllowed,
-    HttpResponsePermanentRedirect,
-    HttpResponseRedirect,
 )
-from django.template.response import TemplateResponse
-from django.urls import reverse
 from django.utils.decorators import classonlymethod
 from django.utils.functional import classproperty
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
-from django.views.decorators.http import require_http_methods
 
-from djestful.constants import DJESTFUL_ATTRS
 from djestful.types import DictHttpMethodStr
 from djestful.utils import is_djestful_action
 

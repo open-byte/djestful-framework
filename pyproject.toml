@@ -5,36 +5,39 @@ description = "Djestful Framework is a Python framework for building RESTful API
 authors = ["Izcar J. Muñoz Torrez <imunoz@open-byte.dev>"]
 
 readme = "README.md"
+
 packages = [
     { include = "djestful" },
     { include = "djestful/**/*.py"}
 ]
-[tool.poetry.dependencies]
-python = "^3.11"
-pydantic = "^2.6"
-django = ">= 4.2, < 6"
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
-[tool.poetry.group.checkers.dependencies]
-mypy = ">=1.9,<2"
-ruff = "^0.5.1"
-pre-commit = "^3.7.0"
-django-stubs = "^5.0.2"
+[tool.poetry.dependencies]
+python = ">=3.10, <3.13"
+pydantic = ">=2.9, <3"
+django = ">= 4.2, < 6"
 
+[tool.poetry.group.dev.dependencies]
+mypy = ">=1.9,<2"
+ruff = ">=0.5 , <0.8"
+pre-commit = ">=3.7.0, <4.0.0"
+django-stubs = ">=5.0.0, <6.0.0"
 
 [tool.poetry.group.test.dependencies]
-pytest = "^8.1.1"
+pytest = ">=8.3, <9"
+pytest-django = ">=4.9.0, <5.0.0"
+
+[tool.pytest]
+DJANGO_SETTINGS_MODULE = "tests.app.settings"
+python_files = ["tests.py", "test_*.py"]
 
 [tool.mypy]
 python_version = "3.11"
 exclude=[".venv", "tests"]
 strict=true
-follow_imports="normal"
-
-
 
 plugins = ["pydantic.mypy"]
 [tool.pydantic-mypy]
@@ -45,7 +48,6 @@ init_typed = true
 src =["djestful"]
 exclude = [
     ".venv", 
-    "tests"
 ]
 line-length = 100
 fixable = ["F401", "ALL"]

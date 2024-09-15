@@ -13,8 +13,8 @@ class action:
         path: str,
         *,
         methods: list[HttpMethod],
-        description: str | None = None,
         summary: str | None = None,
+        description: str | None = None,
         url_name: str | None = None,
     ) -> None:
         self.path = path
@@ -30,6 +30,7 @@ class action:
             url_name=self.url_name,
         )
         setattr(func, DJESTFUL_ATTRS, djestful_attrs)
+
         return func
 
     @classmethod
@@ -37,8 +38,8 @@ class action:
         cls,
         path: str,
         *,
-        description: str | None = None,
         summary: str | None = None,
+        description: str | None = None,
         url_name: str | None = None,
     ) -> Callable[..., Any]:
         """
@@ -65,8 +66,8 @@ class action:
         cls,
         path: str,
         *,
-        description: str | None = None,
         summary: str | None = None,
+        description: str | None = None,
         url_name: str | None = None,
     ) -> Callable[..., Any]:
         """
@@ -83,8 +84,8 @@ class action:
         return cls(
             path,
             methods=['post'],
-            description=description,
             summary=summary,
+            description=description,
             url_name=url_name,
         )
 
@@ -93,8 +94,8 @@ class action:
         cls,
         path: str,
         *,
-        description: str | None = None,
         summary: str | None = None,
+        description: str | None = None,
         url_name: str | None = None,
     ) -> Callable[..., Any]:
         """
@@ -111,8 +112,8 @@ class action:
         return cls(
             path,
             methods=['put'],
-            description=description,
             summary=summary,
+            description=description,
             url_name=url_name,
         )
 
@@ -121,8 +122,8 @@ class action:
         cls,
         path: str,
         *,
-        description: str | None = None,
         summary: str | None = None,
+        description: str | None = None,
         url_name: str | None = None,
     ) -> Callable[..., Any]:
         """
@@ -139,8 +140,8 @@ class action:
         return cls(
             path,
             methods=['patch'],
-            description=description,
             summary=summary,
+            description=description,
             url_name=url_name,
         )
 
@@ -149,8 +150,8 @@ class action:
         cls,
         path: str,
         *,
-        description: str | None = None,
         summary: str | None = None,
+        description: str | None = None,
         url_name: str | None = None,
     ) -> Callable[..., Any]:
         """
@@ -167,8 +168,8 @@ class action:
         return cls(
             path,
             methods=['delete'],
-            description=description,
             summary=summary,
+            description=description,
             url_name=url_name,
         )
 
@@ -178,8 +179,8 @@ class action:
         path: str,
         *,
         methods: list[HttpMethod],
-        description: str | None = None,
         summary: str | None = None,
+        description: str | None = None,
         url_name: str | None = None,
     ) -> Callable[..., Any]:
         """
@@ -197,7 +198,7 @@ class action:
         return cls(
             path,
             methods=methods,
-            description=description,
             summary=summary,
+            description=description,
             url_name=url_name,
         )

@@ -12,7 +12,7 @@ from djestful.types import DictHttpMethodStr
 from djestful.utils import is_djestful_action
 from djestful.views import APIView
 
-RouteMapping = tuple[str, APIView, str]
+RouteMapping = tuple[str, type[APIView], str]
 
 
 class BaseRouter(ABC):
@@ -31,7 +31,7 @@ class BaseRouter(ABC):
 
 
 class Router(BaseRouter):
-    def include(self, prefix: str, view: APIView, *, basename: str | None = None) -> None:
+    def include(self, prefix: str, view: type[APIView], *, basename: str | None = None) -> None:
         basename = basename or view.__class__.__name__.lower()
 
         ## check if the basename is already registered
@@ -41,7 +41,7 @@ class Router(BaseRouter):
 
         self.register.append((prefix, view, basename))
 
-    def get_view_actions(self, view: APIView) -> list[Callable[..., Any]]:
+    def get_view_actions(self, view: type[APIView]) -> list[Callable[..., Any]]:
         return [getattr(view, name) for name, method in getmembers(view, is_djestful_action)]
 
     def get_urls(self) -> list[URLPattern]:

@@ -9,4 +9,5 @@ HTTP_METHODS = (
     'trace',
 )
 
+
 DJESTFUL_ATTRS = '__djestful__attrs'

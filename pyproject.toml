@@ -50,9 +50,9 @@ exclude = [
     ".venv", 
 ]
 line-length = 100
+[tool.ruff.lint]
 fixable = ["F401", "ALL"]
 unfixable = []
-[tool.ruff.lint]
 select = [
     "E",  # pycodestyle errors
     "W",  # pycodestyle warnings

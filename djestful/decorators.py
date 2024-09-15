@@ -6,8 +6,10 @@ from djestful.types import HttpMethod
 
 from .constants import DJESTFUL_ATTRS
 
+__all__ = ('action',)
 
-class action:
+
+class Action:
     def __init__(
         self,
         path: str,
@@ -30,6 +32,7 @@ class action:
             url_name=self.url_name,
         )
         setattr(func, DJESTFUL_ATTRS, djestful_attrs)
+
         return func
 
     @classmethod
@@ -201,3 +204,6 @@ class action:
             summary=summary,
             url_name=url_name,
         )
+
+
+action = Action

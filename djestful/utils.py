@@ -1,19 +1,19 @@
-from typing import Any
+from typing import Any, Callable
 
 from djestful.constants import DJESTFUL_ATTRS
 from djestful.func_attributes import FuncAttributes
 
 
-def is_djestful_action(attribute: Any) -> bool:
+def is_djestful_action(func: Callable[..., Any]) -> bool:
     """
-    Check if the given attribute/method is a djestful action.
+    Check if the given function is a djestful action.
 
     Args:
-        attribute (Any): The attribute or method to check.
+        func (Callable[..., Any]): The function to check.
 
     Returns:
-        bool: True if the attribute or method is a djestful action, False otherwise.
+        bool: True if the function is a djestful action, False otherwise.
     """
-    return hasattr(attribute, DJESTFUL_ATTRS) and isinstance(
-        getattr(attribute, DJESTFUL_ATTRS), FuncAttributes
+    return hasattr(func, DJESTFUL_ATTRS) and isinstance(
+        getattr(func, DJESTFUL_ATTRS), FuncAttributes
     )

@@ -165,3 +165,6 @@ class APIView(View):
     #         the pattern method, False otherwise.
     #     """
     #     return request.path == reverse(self.__class__.__name__.
+
+
+class APIViewContainer(APIView): ...

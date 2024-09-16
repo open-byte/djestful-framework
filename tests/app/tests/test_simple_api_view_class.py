@@ -45,7 +45,7 @@ def client() -> Client:
     return Client()
 
 
-@override_settings(ROOT_URLCONF='tests.app.tests.test_simple_api_view_class')
+@override_settings(ROOT_URLCONF=__name__)
 def test_api_view_class(client: Client) -> None:
     response = client.get('/test/class')
     assert response.status_code == 200

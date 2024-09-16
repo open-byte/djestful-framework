@@ -36,8 +36,12 @@ python_files = ["tests.py", "test_*.py"]
 
 [tool.mypy]
 python_version = "3.11"
-exclude=[".venv", "tests"]
 strict=true
+
+[[tool.mypy.overrides]]
+module = "tests.*"
+ignore_missing_imports = true
+disallow_untyped_defs = false
 
 plugins = ["pydantic.mypy"]
 [tool.pydantic-mypy]
@@ -47,7 +51,7 @@ init_typed = true
 [tool.ruff]
 src =["djestful"]
 exclude = [
-    ".venv", 
+    ".venv",
 ]
 line-length = 100
 [tool.ruff.lint]

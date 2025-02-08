@@ -1,5 +1,5 @@
-from functools import wraps
-from typing import Any, Callable, Literal
+from collections.abc import Callable
+from typing import Any
 
 from djestful.func_attributes import FuncAttributes
 from djestful.types import HttpMethod

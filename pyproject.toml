@@ -1,34 +1,31 @@
-[tool.poetry]
-name = "djestful-framework"
-version = "0.0.0"
-description = "Djestful Framework is a Python framework for building RESTful APIs with Standard OpenAPI 3.x+"
-authors = ["Izcar J. Muñoz Torrez <imunoz@open-byte.dev>"]
-
+[project]
+name = "djestful"
+version = "0.1.0"
+description = "Add your description here"
 readme = "README.md"
-
-packages = [
-    { include = "djestful" },
-    { include = "djestful/**/*.py"}
+authors = [
+    { name = "Izcar J. Muñoz Torrez", email = "izcarmt95@gmail.com" }
+]
+requires-python = ">=3.10"
+dependencies = [
+    "django>=4,<6",
+    "pydantic>=2.9,<3",
 ]
 
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
-[tool.poetry.dependencies]
-python = ">=3.10, <3.13"
-pydantic = ">=2.9, <3"
-django = ">= 4.2, < 6"
-
-[tool.poetry.group.dev.dependencies]
-mypy = ">=1.9,<2"
-ruff = ">=0.5 , <0.8"
-pre-commit = ">=3.7.0, <4.0.0"
-django-stubs = ">=5.0.0, <6.0.0"
-
-[tool.poetry.group.test.dependencies]
-pytest = ">=8.3, <9"
-pytest-django = ">=4.9.0, <5.0.0"
+[dependency-groups]
+dev = [
+    "django-stubs[compatible-mypy]>=5.1.3",
+    "mypy>=1.9,<2",
+    "pre-commit>=3.8,<4",
+    "ruff>=0.9,<1",
+]
+testing = [
+    "pytest-django>=4.9.0",
+]
 
 [tool.pytest]
 DJANGO_SETTINGS_MODULE = "tests.app.settings"

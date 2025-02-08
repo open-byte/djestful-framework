@@ -1,4 +1,5 @@
-from typing import Any, Callable
+from collections.abc import Callable
+from typing import Any
 
 from djestful.constants import DJESTFUL_ATTRS
 from djestful.func_attributes import FuncAttributes

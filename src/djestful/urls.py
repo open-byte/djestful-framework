@@ -1,11 +1,8 @@
-import json
-from typing import Any, Callable
+from collections.abc import Callable
+from typing import Any
 
-from django.http import JsonResponse
 from django.urls import URLPattern, URLResolver, get_resolver
-from django.views import View
 
-from djestful.constants import DJESTFUL_ATTRS
 from djestful.views import APIView
 
 

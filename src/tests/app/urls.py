@@ -16,11 +16,7 @@ Including another URLconf
 """
 
 from django.contrib import admin
-from django.http import JsonResponse
 from django.urls import path
-from djestful.decorators import action
-from djestful.routers import Router
-from djestful.views import APIView
 
 urlpatterns = [
     path('admin/', admin.site.urls),

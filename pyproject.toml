@@ -33,8 +33,12 @@ python_files = ["tests.py", "test_*.py"]
 
 [tool.mypy]
 python_version = "3.11"
-exclude=[".venv", "tests"]
 strict=true
+
+[[tool.mypy.overrides]]
+module = "tests.*"
+ignore_missing_imports = true
+disallow_untyped_defs = false
 
 plugins = ["pydantic.mypy"]
 [tool.pydantic-mypy]
@@ -47,9 +51,9 @@ exclude = [
     ".venv",
 ]
 line-length = 100
+[tool.ruff.lint]
 fixable = ["F401", "ALL"]
 unfixable = []
-[tool.ruff.lint]
 select = [
     "E",  # pycodestyle errors
     "W",  # pycodestyle warnings

@@ -1,5 +1,3 @@
-from typing import Any
-
 import pytest
 from django.http import JsonResponse
 from django.test import override_settings
@@ -9,32 +7,34 @@ from djestful.routers import Router
 from djestful.views import APIView
 
 
+## views.py
 class TestAPIView(APIView):
     @action.get('test/class')
-    def get_test_class(self, request: Any) -> JsonResponse:
+    async def get_test_class(self, request):
         return JsonResponse({'message': 'get test class'})
 
     @action.post('test/class')
-    def post_test_class(self, request: Any) -> JsonResponse:
+    async def post_test_class(self, request):
         return JsonResponse({'message': 'post test class'})
 
     @action.put('test/class')
-    def put_test_class(self, request: Any) -> JsonResponse:
+    async def put_test_class(self, request):
         return JsonResponse({'message': 'put test class'})
 
     @action.patch('test/class')
-    def patch_test_class(self, request: Any) -> JsonResponse:
+    async def patch_test_class(self, request):
         return JsonResponse({'message': 'patch test class'})
 
     @action.delete('test/class')
-    def delete_test_class(self, request: Any) -> JsonResponse:
+    async def delete_test_class(self, request):
         return JsonResponse({'message': 'delete test class'})
 
     @action.generic('test/generic', methods=['get', 'post', 'put', 'patch', 'delete'])
-    def generic_test_class(self, request: Any) -> JsonResponse:
+    async def generic_test_class(self, request):
         return JsonResponse({'message': f'generic test class {request.method.lower()}'})
 
 
+## urls.py
 router = Router()
 router.include('', TestAPIView, basename='test-api-view-class')
 

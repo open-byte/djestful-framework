@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
+from collections.abc import Callable
 from inspect import getmembers
-from typing import Any, Callable
+from typing import Any
 
 from django.core.exceptions import ImproperlyConfigured
 from django.urls import URLPattern

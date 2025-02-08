@@ -1,8 +1,8 @@
 import json
-from typing import Any, Callable
+from collections.abc import Callable
+from typing import Any
 
 from django.apps import AppConfig
-from django.views import View
 
 from djestful.urls import get_urls_view_mapping
 

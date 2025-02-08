@@ -1,5 +1,6 @@
+from collections.abc import Callable
 from inspect import getmembers
-from typing import Any, Callable
+from typing import Any
 
 from asgiref.sync import iscoroutinefunction, markcoroutinefunction
 from django.core.exceptions import ImproperlyConfigured
@@ -38,7 +39,7 @@ class APIView(View):
         is_async = iscoroutinefunction(handlers[0])
         if not all(iscoroutinefunction(h) == is_async for h in handlers[1:]):
             raise ImproperlyConfigured(
-                f'{cls.__qualname__} HTTP handlers must either be all sync or all ' 'async.'  # type: ignore[attr-defined]
+                f'{cls.__qualname__} HTTP handlers must either be all sync or all async.'  # type: ignore[attr-defined]
             )
         return is_async
 

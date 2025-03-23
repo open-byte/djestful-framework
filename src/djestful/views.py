@@ -12,11 +12,15 @@ from django.utils.functional import classproperty
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 
+from djestful.constants import DJESTFUL_OPERATION
+from djestful.operation import Operation
 from djestful.types import DictHttpMethodStr
 from djestful.utils import is_djestful_action
 
 
 class APIView(View):
+    view_is_function = False
+
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
         self.handlers: list[Callable[..., Any]] = []
@@ -150,8 +154,10 @@ class APIView(View):
 
             if not is_djestful_action(handler):
                 handler = self.http_method_not_allowed
+        ## prepare the request with operation
+        operation: Operation = getattr(handler, DJESTFUL_OPERATION)
 
-        return handler(request, *args, **kwargs)
+        return operation.execute(self, request, *args, **kwargs)
 
     # def __check_pattern_path_with_the_same_method(self, request: HttpRequest) -> bool:
     #     """
@@ -168,4 +174,5 @@ class APIView(View):
     #     return request.path == reverse(self.__class__.__name__.
 
 
-class APIViewContainer(APIView): ...
+class APIViewContainer(APIView):
+    view_is_function = True

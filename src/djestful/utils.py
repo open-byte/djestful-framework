@@ -1,8 +1,8 @@
 from collections.abc import Callable
 from typing import Any
 
-from djestful.constants import DJESTFUL_ATTRS
-from djestful.func_attributes import FuncAttributes
+from djestful.constants import DJESTFUL_OPERATION
+from djestful.operation import Operation
 
 
 def is_djestful_action(func: Callable[..., Any]) -> bool:
@@ -15,6 +15,6 @@ def is_djestful_action(func: Callable[..., Any]) -> bool:
     Returns:
         bool: True if the function is a djestful action, False otherwise.
     """
-    return hasattr(func, DJESTFUL_ATTRS) and isinstance(
-        getattr(func, DJESTFUL_ATTRS), FuncAttributes
+    return hasattr(func, DJESTFUL_OPERATION) and isinstance(
+        getattr(func, DJESTFUL_OPERATION), Operation
     )

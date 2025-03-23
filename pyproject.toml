@@ -28,7 +28,6 @@ testing = [
 ]
 
 [tool.pytest]
-DJANGO_SETTINGS_MODULE = "tests.app.settings"
 python_files = ["tests.py", "test_*.py"]
 
 [tool.mypy]

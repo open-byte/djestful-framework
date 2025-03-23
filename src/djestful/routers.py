@@ -7,8 +7,8 @@ from django.core.exceptions import ImproperlyConfigured
 from django.urls import URLPattern
 from django.urls import path as django_path
 
-from djestful.constants import DJESTFUL_ATTRS
-from djestful.func_attributes import FuncAttributes
+from djestful.constants import DJESTFUL_OPERATION
+from djestful.operation import Operation
 from djestful.types import DictHttpMethodStr
 from djestful.utils import is_djestful_action
 from djestful.views import APIView, APIViewContainer
@@ -55,7 +55,6 @@ class Router(BaseRouter):
             )
         else:
             wrapper_class = route.view
-
         setattr(wrapper_class, view.__name__, staticmethod(view))
 
     @overload
@@ -103,21 +102,21 @@ class Router(BaseRouter):
 
             url_mapping_actions.clear()
             for djestful_action in self.get_view_actions(route.view):
-                djestful_attrs: FuncAttributes = getattr(djestful_action, DJESTFUL_ATTRS)
+                djestful_operation: Operation = getattr(djestful_action, DJESTFUL_OPERATION)
                 url_mapping_actions.setdefault(
-                    (f'{route.prefix}{djestful_attrs.path}', basename), []
+                    (f'{route.prefix}{djestful_operation.path}', basename), []
                 ).append(djestful_action)
 
             for (_url, _basename), action_list in url_mapping_actions.items():
                 _actions: DictHttpMethodStr = {}
                 _url_name_list: list[str] = []
                 for djestful_action in action_list:
-                    djestful_attrs = getattr(djestful_action, DJESTFUL_ATTRS)
+                    djestful_operation = getattr(djestful_action, DJESTFUL_OPERATION)
                     _actions.update(
-                        {method: djestful_action.__name__ for method in djestful_attrs.methods}
+                        {method: djestful_action.__name__ for method in djestful_operation.methods}
                     )
                     _url_name_list.append(
-                        f'{_basename}_{djestful_attrs.url_name or djestful_action.__name__}'
+                        f'{_basename}_{djestful_operation.url_name or djestful_action.__name__}'
                     )
 
                 _view = route.view.as_view(actions=_actions)

@@ -1,10 +1,10 @@
 from collections.abc import Callable
 from typing import Any
 
-from djestful.func_attributes import FuncAttributes
+from djestful.operation import Operation
 from djestful.types import HttpMethod
 
-from .constants import DJESTFUL_ATTRS
+from .constants import DJESTFUL_OPERATION
 
 
 class action:
@@ -24,12 +24,15 @@ class action:
         self.url_name = url_name
 
     def __call__(self, func: Callable[..., Any]) -> Callable[..., Any]:
-        djestful_attrs = FuncAttributes(
-            methods=self.methods,
+        djestful_operation = Operation(
+            view_func=func,
             path=self.path,
+            methods=self.methods,
+            description=self.description,
+            summary=self.summary,
             url_name=self.url_name,
         )
-        setattr(func, DJESTFUL_ATTRS, djestful_attrs)
+        setattr(func, DJESTFUL_OPERATION, djestful_operation)
 
         return func
 

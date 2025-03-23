@@ -10,4 +10,4 @@ HTTP_METHODS = (
 )
 
 
-DJESTFUL_ATTRS = '__djestful__attrs'
+DJESTFUL_OPERATION = '__djestful__operation'

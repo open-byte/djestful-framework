@@ -18,3 +18,16 @@ def is_djestful_action(func: Callable[..., Any]) -> bool:
     return hasattr(func, DJESTFUL_OPERATION) and isinstance(
         getattr(func, DJESTFUL_OPERATION), Operation
     )
+
+
+def replace_path_param_notation(path: str) -> str:
+    """
+    Replace the path parameter notation with the Django path parameter notation.
+
+    Args:
+        path (str): The path to replace.
+
+    Returns:
+        str: The path with the Django path parameter notation.
+    """
+    return path.replace('{', '<').replace('}', '>')

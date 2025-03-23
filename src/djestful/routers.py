@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from collections.abc import Callable
+from collections.abc import Callable, Iterator
 from inspect import getmembers
 from typing import Any, NamedTuple, overload
 
@@ -10,7 +10,7 @@ from django.urls import path as django_path
 from djestful.constants import DJESTFUL_OPERATION
 from djestful.operation import Operation
 from djestful.types import DictHttpMethodStr
-from djestful.utils import is_djestful_action
+from djestful.utils import is_djestful_action, replace_path_param_notation
 from djestful.views import APIView, APIViewContainer
 
 
@@ -28,10 +28,10 @@ class BaseRouter(ABC):
     def include(self, *args: Any, **kwargs: Any) -> None: ...
 
     @abstractmethod
-    def get_urls(self) -> list[URLPattern]: ...
+    def get_urls(self) -> Iterator[URLPattern]: ...
 
     @property
-    def urls(self) -> list[URLPattern]:
+    def urls(self) -> Iterator[URLPattern]:
         return self.get_urls()
 
 
@@ -84,7 +84,7 @@ class Router(BaseRouter):
     def get_view_actions(self, view: type[APIView]) -> list[Callable[..., Any]]:
         return [getattr(view, name) for name, method in getmembers(view, is_djestful_action)]
 
-    def get_urls(self) -> list[URLPattern]:
+    def get_urls(self) -> Iterator[URLPattern]:
         """
         Get the list of URL patterns for the router.
 
@@ -103,9 +103,12 @@ class Router(BaseRouter):
             url_mapping_actions.clear()
             for djestful_action in self.get_view_actions(route.view):
                 djestful_operation: Operation = getattr(djestful_action, DJESTFUL_OPERATION)
-                url_mapping_actions.setdefault(
-                    (f'{route.prefix}{djestful_operation.path}', basename), []
-                ).append(djestful_action)
+                _normalized_url = replace_path_param_notation(
+                    f'{route.prefix}{djestful_operation.path}'
+                )
+                url_mapping_actions.setdefault((_normalized_url, basename), []).append(
+                    djestful_action
+                )
 
             for (_url, _basename), action_list in url_mapping_actions.items():
                 _actions: DictHttpMethodStr = {}
@@ -120,7 +123,6 @@ class Router(BaseRouter):
                     )
 
                 _view = route.view.as_view(actions=_actions)
-                _urls.extend(
-                    [django_path(_url, _view, name=url_name) for url_name in _url_name_list]
-                )
-        return _urls
+
+                for _url_name in _url_name_list:
+                    yield django_path(_url, _view, name=_url_name)

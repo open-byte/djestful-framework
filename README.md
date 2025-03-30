@@ -36,7 +36,7 @@ class TestView(APIView):
         return item
 
     @action.get('/users/me', description='This is a test get endpoint',summary='This is a test get endpoint',tags=['test'])
-    async def get_test_endpoint(self, request: HttpRequest) -> list[Item]:\
+    async def get_test_endpoint(self, request: HttpRequest) -> list[Item]:
         return [
             Item(id=1, name='test', description='test'),
             Item(id=2, name='test2', description='test2'),

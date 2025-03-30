@@ -35,15 +35,9 @@ class Swagger(DocsBase):
         # TODO: add settings to swagger template
         # This we need to add into the settings to define the openapi
         # url and the swagger url
-        context: DictStrAny = {
-            'swagger_css_url': 'https://cdn.jsdelivr.net/npm/swagger-ui-dist@5/swagger-ui.css',
-            'swagger_js_url': 'https://cdn.jsdelivr.net/npm/swagger-ui-dist@5/swagger-ui-bundle.js',
-            'swagger_favicon_url': '',
-            'title': 'Djestful Swagger UI',
-            'openapi_url': 'https://raw.githubusercontent.com/readmeio/oas-examples/refs/heads/main/3.0/json/petstore.json',
-            'openapi_json_url': 'https://raw.githubusercontent.com/readmeio/oas-examples/refs/heads/main/3.0/json/petstore.json',
-        }
+        context = self.settings
 
         template = Template(Path(self.template).read_text())
         html = template.render(RequestContext(request, context))
+
         return HttpResponse(html)

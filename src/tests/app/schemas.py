@@ -85,7 +85,7 @@ class ExternalOpenAPISchema(Schema):
     license = {
         'name': 'MIT External',
         'identifier': 'MIT External',
-        'url': 'https://example.com/internal/license',
+        'url': 'https://example.com/external/license',
     }
     servers = [
         {

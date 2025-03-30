@@ -1,4 +1,3 @@
-from djestful.types import DictStrAny
 from pydantic import BaseModel
 
 
@@ -15,12 +14,12 @@ class License(BaseModel):
 
 
 class Info(BaseModel):
-    title: str
+    title: str = 'Djestful API'
     description: str | None = None
     termsOfService: str | None = None
-    contact: DictStrAny | None = None
-    license: DictStrAny | None = None
-    version: str
+    contact: Contact | None = None
+    license: License | None = None
+    version: str = '1.0.0'
 
 
 class ServerVariable(BaseModel):
@@ -36,8 +35,8 @@ class Server(BaseModel):
 
 
 class OpenAPI(BaseModel):
-    openapi: str = '3.0.1'
-    info: Info
+    openapi: str = '3.1.0'
+    info: Info = Info()
     jsonSchemaDialect: str | None = None
     servers: list[Server] | None = None
 

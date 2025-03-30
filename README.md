@@ -9,33 +9,39 @@ The main goal of DjestFul is to provide a simple way to document the endpoints o
 
 For example, the following code is a simple Django view:
 
-```python
 
 ```python
 from django.http import HttpResponse, JsonResponse
 from djestful.views import APIView
 from djestful.decorators import action
 from django.http import HttpRequest
+from pydantic import BaseModel
 
+## schemas.py
+class Item(BaseModel):
+    id: int
+    name: str
+    description: str
+
+
+## views.py
 class TestView(APIView):
 
-    @action.post('/users/me', summary='This is a test post endpoint')
-    async def post_test_endpoint(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
-        return JsonResponse(
-            {
-                'message': 'This is a test POST endpoint',
-                'function': 'post_test_endpoint',
-            }
-        )
+    @action.post(
+        '/users/me',
+        description='This is a test post endpoint',
+        summary='This is a test post endpoint',
+        tags=['test'],
+    async def post_test_endpoint(self, item: Item) -> Item:
+        return item
 
-    @action.get('/users/me', summary='This is a test get endpoint')
-    async def get_test_endpoint(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
-        return JsonResponse(
-            {
-                'message': 'This is a test endpoint',
-                'function': 'get_test_endpoint',
-            }
-        )
+    @action.get('/users/me', description='This is a test get endpoint',summary='This is a test get endpoint',tags=['test'])
+    async def get_test_endpoint(self, request: HttpRequest) -> list[Item]:\
+        return [
+            Item(id=1, name='test', description='test'),
+            Item(id=2, name='test2', description='test2'),
+        ]
+
 
 ## urls.py
 
@@ -49,8 +55,7 @@ router.include('api', TestView, basename='test_view')
 
 
 urlpatterns = [
-   path('api/', include(router.urls)),
+   path('', include(router.urls)),
 ]
-
 
 ```

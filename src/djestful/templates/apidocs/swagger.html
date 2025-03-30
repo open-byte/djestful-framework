@@ -15,12 +15,12 @@
     <!-- `SwaggerUIBundle` is now available on the page -->
     <script>
         const ui = SwaggerUIBundle({
-            url: '{{openapi_url}}',
-            "dom_id": "#swagger-ui",
-            "layout": "BaseLayout",
-            "deepLinking": true,
-            "showExtensions": true,
-            "showCommonExtensions": true,
+            url: "{% url openapi_json_view_name %}",
+            dom_id: "#swagger-ui",
+            layout: "BaseLayout",
+            deepLinking: true,
+            showExtensions: true,
+            showCommonExtensions: true,
             presets: [
                 SwaggerUIBundle.presets.apis,
                 SwaggerUIBundle.SwaggerUIStandalonePreset
